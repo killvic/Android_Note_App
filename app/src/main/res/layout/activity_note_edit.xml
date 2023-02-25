@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NoteEditActivity">
+
+    <Button
+        android:id="@+id/btBackToNotesList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></Button>
+
+    <EditText
+        android:id="@+id/etNoteName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Name of Note"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btBackToNotesList"
+        app:layout_constraintTop_toTopOf="parent"></EditText>
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/btSaveNote"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btBackToNotesList">
+
+        <EditText
+            android:id="@+id/etNoteText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="text of note">
+        </EditText>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btSaveNote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+    </Button>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
