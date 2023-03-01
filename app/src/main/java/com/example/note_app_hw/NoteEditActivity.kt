@@ -107,8 +107,20 @@ class NoteEditActivity : AppCompatActivity() {
     private fun deleteNoteFromDatabase(id: Int) {
         NotesDB.getDatabase(this).noteDao().deleteById(id)
     }
-}
     // Room Database Functions
     // <----------------------------------->
+
+    // Extra function to fill database for testing
+    fun hardcodeFill(){
+        for (i in 1..30) {
+            val note = NoteEntity(
+                name = "Note $i",
+                text = "This is the content of note $i",
+                lastChange = convertLongToTime(System.currentTimeMillis())
+            )
+            NotesDB.getDatabase(this).noteDao().insert(note)
+        }
+    }
+}
 
 
