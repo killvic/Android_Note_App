@@ -19,8 +19,6 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var btAddNote: FloatingActionButton
-    private lateinit var btDeleteOne: FloatingActionButton
-    private lateinit var btEdit: FloatingActionButton
     private val adapter: RecyclerViewAdapter = RecyclerViewAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) { // логика вьюх
@@ -28,35 +26,19 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
-        //adapter = RecyclerViewAdapter()
-
+        recyclerView.adapter = adapter
         adapter.onClick = {
             val intent = Intent(this@MainActivity, NoteEditActivity::class.java)
             intent.putExtra("id", it)
             startActivity(intent)
         }
 
-        recyclerView.adapter = adapter
         recyclerView.layoutManager =
             LinearLayoutManager(this) // also there's grid, staggered layout
 
         btAddNote = findViewById(R.id.fabAddNote)
         btAddNote.setOnClickListener {
             addNewNoteScreen()
-        }
-
-        btDeleteOne = findViewById(R.id.fabDeleteOne)
-        btDeleteOne.setOnClickListener {
-            // add dialog window asking for id
-            // delete chosen note
-            TODO("Not yet implemented")
-        }
-
-        btEdit = findViewById(R.id.fabEdit)
-        btEdit.setOnClickListener {
-            // add dialog window asking for id
-            // delete chosen note
-            TODO("Not yet implemented")
         }
     }
 
@@ -65,12 +47,6 @@ class MainActivity : AppCompatActivity() {
         val entityList = NotesDB.getDatabase(this).noteDao().readAllNotes()
         adapter.notes = entityToClassConverter(entityList)
         adapter.notifyDataSetChanged()
-
-        // DONE - сделать запрос getAll, получаю лист и кладу в адаптер
-        // DONE - законвертить этот лист в нотекласс (через map)
-        // DONE - и отправить готовый список в адаптер
-        //  - не забыть про обновление дб после каждого изменения
-        //  - возможно нужно использовать DiffUtil
     }
 
 
@@ -86,16 +62,6 @@ class MainActivity : AppCompatActivity() {
         }
         return noteClassList
     }
-
-    private fun deleteNote() {
-        NotesDB.getDatabase(this).noteDao().delete(NoteEntity(id = 1))
-        TODO("Not yet implemented")
-    }
-
-    private fun editNote() {
-        TODO("Not yet implemented")
-    }
-
     fun addNewNoteScreen() {
         val intent = Intent(this, NoteEditActivity::class.java)
         startActivityForResult(intent, 1)

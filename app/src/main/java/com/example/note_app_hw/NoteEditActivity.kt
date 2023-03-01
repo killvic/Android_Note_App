@@ -105,8 +105,7 @@ class NoteEditActivity : AppCompatActivity() {
     }
 
     private fun deleteNoteFromDatabase(id: Int) {
-        var noteForDelete = NotesDB.getDatabase(this).noteDao().loadSingle(id)
-        NotesDB.getDatabase(this).noteDao().delete(noteForDelete)
+        NotesDB.getDatabase(this).noteDao().deleteById(id)
     }
 }
     // Room Database Functions

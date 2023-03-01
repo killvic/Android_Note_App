@@ -17,9 +17,10 @@ interface NoteDAO {
     @Query("SELECT * FROM notes_table ORDER BY id ASC")
     fun readAllNotes(): List<NoteEntity>
 
-    @Query("SELECT * FROM notes_table WHERE id=:id ")
+    @Query("SELECT * FROM notes_table WHERE id=:id")
     fun loadSingle(id: Int): NoteEntity
 
-    // написать query deleteById
-
+    // Extra Query
+    @Query("DELETE FROM notes_table WHERE id=:id")
+    fun deleteById(id: Int)
 }
