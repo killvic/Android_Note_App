@@ -29,13 +29,14 @@ class NoteEditActivity : AppCompatActivity() {
         etNoteText = findViewById(R.id.etNoteText)
         var id = intent.getIntExtra("id", -1)
         editMode = mode(id)
+        if (editMode) {
+            etNoteName.setText(NotesDB.getDatabase(this).noteDao().loadSingle(id).name)
+            etNoteText.setText(NotesDB.getDatabase(this).noteDao().loadSingle(id).text)
+        }
 
         btSaveNote.setOnClickListener{
-            if (editMode) {
+            if (editMode)
                 updateNoteInDatabase(id)
-                Log.d("db", "I passed update")
-                Log.d("dd", id.toString())
-            }
             else
                 insertNoteToDatabase()
             onBackPressed()
@@ -57,14 +58,14 @@ class NoteEditActivity : AppCompatActivity() {
     // Functions for new Note Initialization
 
     // Converts Long to Time
-    fun convertLongToTime(time: Long): String {
+    private fun convertLongToTime(time: Long): String {
         val date = Date(time)
         val format = SimpleDateFormat("yyyy.MM.dd HH:mm")
         return format.format(date)
     }
 
     // Takes information from edit textes and creates a NoteEntity
-    fun createNoteEntity(): NoteEntity {
+    private fun createNoteEntity(): NoteEntity {
         return NoteEntity(
             etNoteName.text.toString(),
             etNoteText.text.toString(),
@@ -73,12 +74,10 @@ class NoteEditActivity : AppCompatActivity() {
     }
 
     // updates db
-    fun updateNoteEntity(id: Int): NoteEntity {
+    private fun updateNoteEntity(id: Int): NoteEntity {
         var noteForEditing = NotesDB.getDatabase(this).noteDao().loadSingle(id)
-        Log.d("db", noteForEditing.toString())
         noteForEditing.name = etNoteName.text.toString()
         noteForEditing.text = etNoteText.text.toString()
-        Log.d("db", noteForEditing.toString())
         return noteForEditing
     }
 
@@ -87,11 +86,11 @@ class NoteEditActivity : AppCompatActivity() {
     // Room Database Functions
 
     // Calls for CreateNoteEntity() and adds returned entit to database
-    fun insertNoteToDatabase(){
+    private fun insertNoteToDatabase(){
         NotesDB.getDatabase(this).noteDao().insert(createNoteEntity())
     }
 
-    fun updateNoteInDatabase(id: Int){
+    private fun updateNoteInDatabase(id: Int){
         NotesDB.getDatabase(this).noteDao().update(updateNoteEntity(id))
     }
 
