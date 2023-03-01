@@ -17,6 +17,7 @@ class NoteEditActivity : AppCompatActivity() {
     private lateinit var btSaveNote: Button
     private lateinit var etNoteName: EditText
     private lateinit var etNoteText: EditText
+    private lateinit var btDeleteNote: Button
     var editMode: Boolean = false // false - Create mode, true - Edit Mode
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,19 +28,28 @@ class NoteEditActivity : AppCompatActivity() {
         btSaveNote = findViewById(R.id.btSaveNote)
         etNoteName = findViewById(R.id.etNoteName)
         etNoteText = findViewById(R.id.etNoteText)
+        btDeleteNote = findViewById(R.id.btDeleteNote)
         var id = intent.getIntExtra("id", -1)
         editMode = mode(id)
+
         if (editMode) {
             etNoteName.setText(NotesDB.getDatabase(this).noteDao().loadSingle(id).name)
             etNoteText.setText(NotesDB.getDatabase(this).noteDao().loadSingle(id).text)
-        }
 
-        btSaveNote.setOnClickListener{
-            if (editMode)
+            btDeleteNote.setOnClickListener{
+                deleteNoteFromDatabase(id)
+                onBackPressed()
+            }
+            btSaveNote.setOnClickListener{
                 updateNoteInDatabase(id)
-            else
+                onBackPressed()
+            }
+        }
+        else {
+            btSaveNote.setOnClickListener{
                 insertNoteToDatabase()
-            onBackPressed()
+                onBackPressed()
+            }
         }
     }
 
@@ -86,31 +96,20 @@ class NoteEditActivity : AppCompatActivity() {
     // Room Database Functions
 
     // Calls for CreateNoteEntity() and adds returned entit to database
-    private fun insertNoteToDatabase(){
+    private fun insertNoteToDatabase() {
         NotesDB.getDatabase(this).noteDao().insert(createNoteEntity())
     }
 
-    private fun updateNoteInDatabase(id: Int){
+    private fun updateNoteInDatabase(id: Int) {
         NotesDB.getDatabase(this).noteDao().update(updateNoteEntity(id))
     }
 
+    private fun deleteNoteFromDatabase(id: Int) {
+        var noteForDelete = NotesDB.getDatabase(this).noteDao().loadSingle(id)
+        NotesDB.getDatabase(this).noteDao().delete(noteForDelete)
+    }
+}
     // Room Database Functions
     // <----------------------------------->
 
-
-
-    // Extra, non-used methods
-    fun deleteById(id: Int) {
-        val note = NotesDB.getDatabase(this).noteDao().loadSingle(id)
-        NotesDB.getDatabase(this).noteDao().delete(note)
-    }
-
-    fun editById(id: Int) {
-        val newNote = NoteEntity("this is EDITED note")
-        val oldNote = NotesDB.getDatabase(this).noteDao().loadSingle(id)
-        NotesDB.getDatabase(this).noteDao().update(oldNote)
-    }
-
-    // <-------------------------------------->
-}
 
