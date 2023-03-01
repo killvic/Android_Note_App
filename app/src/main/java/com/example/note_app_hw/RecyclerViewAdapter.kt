@@ -7,7 +7,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.note_app_hw.note_package.NoteClass
 
-class RecyclerViewAdapter(var notes: List<NoteClass> = listOf()) :
+class RecyclerViewAdapter(
+    var notes: List<NoteClass> = listOf(),
+    var onClick: ((Int) -> Unit) ?= null
+) :
     RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -27,6 +30,10 @@ class RecyclerViewAdapter(var notes: List<NoteClass> = listOf()) :
         viewHolder.tvNoteName.text = notes[position].name
         viewHolder.tvNoteText.text = notes[position].text
         viewHolder.tvLastChange.text = notes[position].lastChange.toString()
+
+        viewHolder.itemView.setOnClickListener {
+            onClick?.invoke(notes[position].id)
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

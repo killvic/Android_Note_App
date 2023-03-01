@@ -4,78 +4,66 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import com.example.note_app_hw.Note_DB.NoteDAO
 import com.example.note_app_hw.Note_DB.NoteEntity
 import com.example.note_app_hw.Note_DB.NotesDB
-import com.example.note_app_hw.note_package.NoteClass
 import java.text.SimpleDateFormat
 import java.util.*
 
 class NoteEditActivity : AppCompatActivity() {
-    private lateinit var btExitNote: Button
     private lateinit var btSaveNote: Button
     private lateinit var etNoteName: EditText
     private lateinit var etNoteText: EditText
+    var editMode: Boolean = false // false - Create mode, true - Edit Mode
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_note_edit)
 
         // views initialization
-        btExitNote = findViewById(R.id.btBackToNotesList)
         btSaveNote = findViewById(R.id.btSaveNote)
         etNoteName = findViewById(R.id.etNoteName)
         etNoteText = findViewById(R.id.etNoteText)
-
-        btExitNote.setOnClickListener{
-            backToNotesList()
-        }
+        var id = intent.getIntExtra("id", -1)
+        editMode = mode(id)
 
         btSaveNote.setOnClickListener{
-            saveNote()
+            if (editMode) {
+                updateNoteInDatabase(id)
+                Log.d("db", "I passed update")
+                Log.d("dd", id.toString())
+            }
+            else
+                insertNoteToDatabase()
+            onBackPressed()
         }
     }
 
+    // <------------------------------>
+    // Help Functions
 
-    // Help functions
-    private fun backToNotesList(){
-        setResult(Activity.RESULT_CANCELED)
-        finish()
+    // This function returns a mode in which this activity is launched
+    // Where false is for a Create mode, and true is for an Edit mode
+    private fun mode(id: Int): Boolean {
+        if (id >= 0)
+            return true
+        return false
     }
 
-    // takes new note and passes it to main activity
-    private fun saveNote(){
-        val intent = Intent()
-        intent.putExtra("result", createNote()) // <== passes new note to main activity
-        setResult(Activity.RESULT_OK, intent)
-        finish()
-        // ? display a success message
-    }
+    // <------------------------------------>
+    // Functions for new Note Initialization
 
-    // Creates and returns new note item
-    private fun createNote(): NoteClass {
-        // -- room --
-        // hardcode insertion for testing
-        insertTestData()
-        insertNoteToDatabase()
-        deleteById(2)
-        // -- room --
-        return NoteClass(
-            etNoteName.text.toString(),
-            etNoteText.text.toString(),
-            convertLongToTime(System.currentTimeMillis())
-        )
-    }
-
+    // Converts Long to Time
     fun convertLongToTime(time: Long): String {
         val date = Date(time)
         val format = SimpleDateFormat("yyyy.MM.dd HH:mm")
         return format.format(date)
     }
 
-    // -- room --
+    // Takes information from edit textes and creates a NoteEntity
     fun createNoteEntity(): NoteEntity {
         return NoteEntity(
             etNoteName.text.toString(),
@@ -84,21 +72,35 @@ class NoteEditActivity : AppCompatActivity() {
         )
     }
 
+    // updates db
+    fun updateNoteEntity(id: Int): NoteEntity {
+        var noteForEditing = NotesDB.getDatabase(this).noteDao().loadSingle(id)
+        Log.d("db", noteForEditing.toString())
+        noteForEditing.name = etNoteName.text.toString()
+        noteForEditing.text = etNoteText.text.toString()
+        Log.d("db", noteForEditing.toString())
+        return noteForEditing
+    }
+
+    // Functions for new Note Initialization
+    // <------------------------------------>
+    // Room Database Functions
+
+    // Calls for CreateNoteEntity() and adds returned entit to database
     fun insertNoteToDatabase(){
         NotesDB.getDatabase(this).noteDao().insert(createNoteEntity())
     }
 
-    fun insertTestData() {
-        for (i in 1..100) {
-            val note = NoteEntity(
-                "Note $i",
-                "This is the text for note $i",
-                convertLongToTime(System.currentTimeMillis())
-            )
-            NotesDB.getDatabase(this).noteDao().insert(note)
-        }
+    fun updateNoteInDatabase(id: Int){
+        NotesDB.getDatabase(this).noteDao().update(updateNoteEntity(id))
     }
 
+    // Room Database Functions
+    // <----------------------------------->
+
+
+
+    // Extra, non-used methods
     fun deleteById(id: Int) {
         val note = NotesDB.getDatabase(this).noteDao().loadSingle(id)
         NotesDB.getDatabase(this).noteDao().delete(note)
@@ -110,6 +112,6 @@ class NoteEditActivity : AppCompatActivity() {
         NotesDB.getDatabase(this).noteDao().update(oldNote)
     }
 
-    // -- room --
+    // <-------------------------------------->
 }
 
