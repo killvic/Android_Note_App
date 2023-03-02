@@ -18,6 +18,7 @@ class NoteEditActivity : AppCompatActivity() {
     private lateinit var etNoteName: EditText
     private lateinit var etNoteText: EditText
     private lateinit var btDeleteNote: Button
+    private lateinit var btBack: Button
     var editMode: Boolean = false // false - Create mode, true - Edit Mode
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,8 +30,14 @@ class NoteEditActivity : AppCompatActivity() {
         etNoteName = findViewById(R.id.etNoteName)
         etNoteText = findViewById(R.id.etNoteText)
         btDeleteNote = findViewById(R.id.btDeleteNote)
+        btBack = findViewById(R.id.btBackToNotesList)
         var id = intent.getIntExtra("id", -1)
         editMode = mode(id)
+
+
+        btBack.setOnClickListener{
+            onBackPressed()
+        }
 
         if (editMode) {
             etNoteName.setText(NotesDB.getDatabase(this).noteDao().loadSingle(id).name)
@@ -44,6 +51,7 @@ class NoteEditActivity : AppCompatActivity() {
                 updateNoteInDatabase(id)
                 onBackPressed()
             }
+
         }
         else {
             btSaveNote.setOnClickListener{
