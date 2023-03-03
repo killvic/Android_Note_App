@@ -44,7 +44,7 @@ class NoteEditActivity : AppCompatActivity() {
             etNoteText.setText(NotesDB.getDatabase(this).noteDao().loadSingle(id).text)
 
             btDeleteNote.setOnClickListener{
-                deleteNoteFromDatabase(id)
+                NotesDB.getDatabase(this).noteDao().deleteById(id)
                 onBackPressed()
             }
             btSaveNote.setOnClickListener{
@@ -110,10 +110,6 @@ class NoteEditActivity : AppCompatActivity() {
 
     private fun updateNoteInDatabase(id: Int) {
         NotesDB.getDatabase(this).noteDao().update(updateNoteEntity(id))
-    }
-
-    private fun deleteNoteFromDatabase(id: Int) {
-        NotesDB.getDatabase(this).noteDao().deleteById(id)
     }
     // Room Database Functions
     // <----------------------------------->
