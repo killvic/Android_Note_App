@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.note_app_hw.note_package.NoteClass
 
@@ -39,4 +40,10 @@ class RecyclerViewAdapter(
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = notes.size
 
+    fun setData(newNoteList: List<NoteClass>) {
+        val diffUtil = MyDiffUtil(notes, newNoteList)
+        val diffResults = DiffUtil.calculateDiff(diffUtil)
+        notes = newNoteList
+        diffResults.dispatchUpdatesTo(this)
+    }
 }

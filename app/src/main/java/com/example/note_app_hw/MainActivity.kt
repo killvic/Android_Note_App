@@ -45,8 +45,9 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() { // запросы к дб
         super.onStart()
         val entityList = NotesDB.getDatabase(this).noteDao().readAllNotes()
-        adapter.notes = entityToClassConverter(entityList)
-        adapter.notifyDataSetChanged()
+//        adapter.notes = entityToClassConverter(entityList)
+//        adapter.notifyDataSetChanged()
+        adapter.setData(entityToClassConverter(entityList))
     }
 
 

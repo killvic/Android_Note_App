@@ -7,3 +7,13 @@ data class NoteClass(
     var id: Int = 0
     )
 
+fun areNotesTheSame(oldNoteObject: NoteClass, newNoteObject: NoteClass): Boolean{
+    return when {
+        oldNoteObject.id != newNoteObject.id -> { false }
+        oldNoteObject.name != newNoteObject.name -> { false }
+        oldNoteObject.text != newNoteObject.text -> { false }
+        oldNoteObject.lastChange != newNoteObject.lastChange -> { false }
+    else -> true
+    }
+}
+
