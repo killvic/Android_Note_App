@@ -19,9 +19,10 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var btAddNote: FloatingActionButton
+    private lateinit var btFavoriteFolder: FloatingActionButton
     private val adapter: RecyclerViewAdapter = RecyclerViewAdapter()
 
-    override fun onCreate(savedInstanceState: Bundle?) { // логика вьюх
+    override fun onCreate(savedInstanceState: Bundle?) { // views logic
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -40,9 +41,14 @@ class MainActivity : AppCompatActivity() {
         btAddNote.setOnClickListener {
             addNewNoteScreen()
         }
+
+        btFavoriteFolder = findViewById(R.id.favFavoriteFolder)
+        btFavoriteFolder.setOnClickListener{
+            favoriteFolderScreen()
+        }
     }
 
-    override fun onStart() { // запросы к дб
+    override fun onStart() { // database logic
         super.onStart()
         val entityList = NotesDB.getDatabase(this).noteDao().readAllNotes()
         adapter.setData(entityToClassConverter(entityList))
@@ -63,6 +69,11 @@ class MainActivity : AppCompatActivity() {
     }
     fun addNewNoteScreen() {
         val intent = Intent(this, NoteEditActivity::class.java)
-        startActivityForResult(intent, 1)
+        startActivity(intent) //
+    }
+
+    fun favoriteFolderScreen() {
+        val intent = Intent(this, FavoriteFolderActivity::class.java)
+        startActivity(intent)
     }
 }

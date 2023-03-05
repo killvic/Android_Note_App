@@ -12,8 +12,11 @@
         android:theme="@style/Theme.Note_App_HW"
         tools:targetApi="31">
         <activity
+            android:name=".FavoriteFolderActivity"
+            android:exported="false" />
+        <activity
             android:name=".NoteEditActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

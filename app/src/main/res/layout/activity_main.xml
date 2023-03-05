@@ -28,4 +28,14 @@
         android:src="@drawable/plus_button">
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/favFavoriteFolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="4dp"
+        android:src="@drawable/favorite_folder">
+    </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
     </androidx.constraintlayout.widget.ConstraintLayout>

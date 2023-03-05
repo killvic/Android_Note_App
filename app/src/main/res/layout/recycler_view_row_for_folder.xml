@@ -1,35 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="5dp"
     android:layout_width="128dp"
     android:layout_height="128dp"
-    android:background="#e39d6b">
+    android:layout_margin="4dp"
+    android:background="#e39d6b"
+    tools:context=".FavoriteFolderActivity">
 
     <TextView
-        android:id="@+id/twNameOfNote"
+        android:id="@+id/tvNameOfNoteFav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Name of a Note"
         android:maxLines="1"
-        android:textColor="@color/black"/>
+        android:text="Name of a Note"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/twTextOfNote"
+        android:id="@+id/tvTextOfNoteFav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxLines="4"
         android:text="Text of Note"
-        android:maxLines="4">
-    </TextView>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvNameOfNoteFav"></TextView>
 
     <TextView
+        android:id="@+id/tvLastChangeFav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/twLastChange"
+        android:maxLines="1"
         android:text="dd.mm.yyyy"
-        android:maxLines="1">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
     </TextView>
 
-</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
