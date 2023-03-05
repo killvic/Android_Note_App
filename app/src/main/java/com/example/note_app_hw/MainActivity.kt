@@ -45,11 +45,8 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() { // запросы к дб
         super.onStart()
         val entityList = NotesDB.getDatabase(this).noteDao().readAllNotes()
-//        adapter.notes = entityToClassConverter(entityList)
-//        adapter.notifyDataSetChanged()
         adapter.setData(entityToClassConverter(entityList))
     }
-
 
     // Converts list of NoteEntities to List of NoteClass in order to pass it to RecyclerViewAdapter
     private fun entityToClassConverter(entityList: List<NoteEntity>): List<NoteClass> {
@@ -58,7 +55,8 @@ class MainActivity : AppCompatActivity() {
                 id = entity.id ?: 0,
                 lastChange = entity.lastChange,
                 name = entity.name,
-                text = entity.text
+                text = entity.text,
+                favorite = entity.favorite
             )
         }
         return noteClassList

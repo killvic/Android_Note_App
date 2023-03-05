@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:hint="Name of Note"
         app:layout_constraintBottom_toTopOf="@+id/scrollView2"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/cbFavorite"
         app:layout_constraintStart_toEndOf="@+id/btBackToNotesList"
         app:layout_constraintTop_toTopOf="parent"></EditText>
 
@@ -56,5 +56,15 @@
         android:text="delete"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"></Button>
+
+    <CheckBox
+        android:id="@+id/cbFavorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Favorite"
+        app:layout_constraintStart_toEndOf="@id/etNoteName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 

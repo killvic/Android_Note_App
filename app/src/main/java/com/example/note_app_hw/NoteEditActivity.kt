@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import com.example.note_app_hw.Note_DB.NoteDAO
 import com.example.note_app_hw.Note_DB.NoteEntity
@@ -19,6 +20,7 @@ class NoteEditActivity : AppCompatActivity() {
     private lateinit var etNoteText: EditText
     private lateinit var btDeleteNote: Button
     private lateinit var btBack: Button
+    private lateinit var ctFavorite: CheckBox
     var editMode: Boolean = false // false - Create mode, true - Edit Mode
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,9 +33,9 @@ class NoteEditActivity : AppCompatActivity() {
         etNoteText = findViewById(R.id.etNoteText)
         btDeleteNote = findViewById(R.id.btDeleteNote)
         btBack = findViewById(R.id.btBackToNotesList)
+        ctFavorite = findViewById(R.id.cbFavorite)
         var id = intent.getIntExtra("id", -1)
         editMode = mode(id)
-
 
         btBack.setOnClickListener{
             onBackPressed()
@@ -42,6 +44,7 @@ class NoteEditActivity : AppCompatActivity() {
         if (editMode) {
             etNoteName.setText(NotesDB.getDatabase(this).noteDao().loadSingle(id).name)
             etNoteText.setText(NotesDB.getDatabase(this).noteDao().loadSingle(id).text)
+            ctFavorite.isChecked = NotesDB.getDatabase(this).noteDao().loadSingle(id).favorite
 
             btDeleteNote.setOnClickListener{
                 NotesDB.getDatabase(this).noteDao().deleteById(id)
@@ -51,7 +54,6 @@ class NoteEditActivity : AppCompatActivity() {
                 updateNoteInDatabase(id)
                 onBackPressed()
             }
-
         }
         else {
             btSaveNote.setOnClickListener{
@@ -87,7 +89,8 @@ class NoteEditActivity : AppCompatActivity() {
         return NoteEntity(
             etNoteName.text.toString(),
             etNoteText.text.toString(),
-            convertLongToTime(System.currentTimeMillis())
+            convertLongToTime(System.currentTimeMillis()),
+            favorite = ctFavorite.isChecked
         )
     }
 
@@ -96,6 +99,7 @@ class NoteEditActivity : AppCompatActivity() {
         var noteForEditing = NotesDB.getDatabase(this).noteDao().loadSingle(id)
         noteForEditing.name = etNoteName.text.toString()
         noteForEditing.text = etNoteText.text.toString()
+        noteForEditing.favorite = ctFavorite.isChecked
         return noteForEditing
     }
 

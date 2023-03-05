@@ -39,7 +39,6 @@
         android:text="text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvNoteNameRow">
-
     </TextView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

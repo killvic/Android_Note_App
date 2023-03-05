@@ -1,47 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="5dp"
     android:layout_width="128dp"
     android:layout_height="128dp"
-    android:layout_margin="4dp"
-    android:background="#e39d6b"
-    tools:context=".MainActivity">
+    android:background="#e39d6b">
 
     <TextView
-        android:id="@+id/tvNoteNameRow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:maxLines="1"
-        android:layout_margin="4dp"
-        android:text="Name of a Note"
-        android:textColor="@android:color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></TextView>
-
-    <TextView
-        android:id="@+id/tvLastChangeRow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        android:text="dd.mm hh:mm"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"></TextView>
-
-    <TextView
-        android:id="@+id/tvNoteTextRow"
+        android:id="@+id/twNameOfNote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        android:layout_marginTop="4dp"
-        android:ellipsize="end"
-        android:maxLines="3"
-        android:text="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvNoteNameRow">
+        android:text="Name of a Note"
+        android:maxLines="1"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/twTextOfNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Text of Note"
+        android:maxLines="4">
+    </TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/twLastChange"
+        android:text="dd.mm.yyyy"
+        android:maxLines="1">
 
     </TextView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
