@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
         recyclerView.adapter = adapter
         adapter.onClick = {
