@@ -17,6 +17,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.text.SimpleDateFormat
 import java.util.*
 
+// TO-DO
+//
+
+// EXTRA FEATURES:
+// - Every new note will have different background color
+// - Add feature, that will allow user to download pictures to notes
 class MainActivity : AppCompatActivity() {
     private lateinit var btAddNote: FloatingActionButton
     private lateinit var btFavoriteFolder: FloatingActionButton
