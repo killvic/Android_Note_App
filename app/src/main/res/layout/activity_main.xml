@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#252525"
     tools:context=".MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -14,6 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="16dp"
         tools:listitem="@layout/recycler_view_row">
 
     </androidx.recyclerview.widget.RecyclerView>
@@ -22,10 +24,11 @@
         android:id="@+id/fabAddNote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="4dp"
-        android:src="@drawable/plus_button">
+        android:layout_margin="16dp"
+        android:src="@drawable/plus_button"
+        app:backgroundTint="#616161"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -34,8 +37,9 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_margin="4dp"
-        android:src="@drawable/favorite_folder">
+        android:layout_margin="16dp"
+        android:src="@drawable/favorite_folder"
+        app:backgroundTint="#616161">
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

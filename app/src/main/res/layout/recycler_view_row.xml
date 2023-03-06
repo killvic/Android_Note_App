@@ -4,19 +4,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="48dp"
+    android:layout_height="60dp"
+    android:maxHeight="104dp"
     android:layout_margin="4dp"
-    android:background="#e39d6b"
+    android:background="@drawable/shape_for_icon_background"
     tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/tvNoteNameRow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:fontFamily="@font/nunito_font"
         android:maxLines="1"
-        android:layout_margin="4dp"
-        android:text="Name of a Note"
-        android:textColor="@android:color/black"
+        android:text="Title"
+        android:textColor="#9A9A9A"
+        app:layout_constraintEnd_toStartOf="@+id/tvLastChangeRow"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></TextView>
 
@@ -24,18 +27,23 @@
         android:id="@+id/tvLastChangeRow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
+        android:textColor="#9A9A9A"
+        android:fontFamily="@font/nunito_font"
+        android:layout_margin="8dp"
         android:text="dd.mm hh:mm"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></TextView>
+        app:layout_constraintTop_toTopOf="parent">
+    </TextView>
 
     <TextView
         android:id="@+id/tvNoteTextRow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
+        android:fontFamily="@font/nunito_font"
+        android:layout_margin="8dp"
         android:ellipsize="end"
         android:maxLines="3"
+        android:textColor="#9A9A9A"
         android:text="text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvNoteNameRow">
