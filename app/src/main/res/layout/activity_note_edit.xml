@@ -4,67 +4,89 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#252525"
     tools:context=".NoteEditActivity">
-
-    <Button
-        android:id="@+id/btBackToNotesList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></Button>
 
     <EditText
         android:id="@+id/etNoteName"
+        android:fontFamily="@font/nunito_font"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Name of Note"
+        android:layout_margin="16dp"
+        android:hint="Title"
+        android:textColor="#9A9A9A"
+        android:textColorHint="#9A9A9A"
         app:layout_constraintBottom_toTopOf="@+id/scrollView2"
-        app:layout_constraintEnd_toStartOf="@+id/cbFavorite"
-        app:layout_constraintStart_toEndOf="@+id/btBackToNotesList"
-        app:layout_constraintTop_toTopOf="parent"></EditText>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btBackToNotesList"
+        android:backgroundTint="#252525"
+        android:textSize="32sp"></EditText>
 
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_margin="16dp"
         app:layout_constraintBottom_toTopOf="@+id/btSaveNote"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btBackToNotesList">
+        app:layout_constraintTop_toBottomOf="@+id/etNoteName">
 
         <EditText
             android:id="@+id/etNoteText"
+            android:fontFamily="@font/nunito_font"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="text of note">
+            android:textColorHint="#9A9A9A"
+            android:textColor="#9A9A9A"
+            android:hint="Type something..."
+            android:backgroundTint="#252525">
         </EditText>
     </ScrollView>
-
-    <Button
-        android:id="@+id/btSaveNote"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Save"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"></Button>
-
-    <Button
-        android:id="@+id/btDeleteNote"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="delete"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"></Button>
 
     <CheckBox
         android:id="@+id/cbFavorite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Favorite"
-        app:layout_constraintStart_toEndOf="@id/etNoteName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:button="@drawable/favorite_checkbox_icon"
+        android:background="@drawable/shape_for_icon_background"
+        android:layout_margin="8dp"
+        android:buttonTint="#FFFFFF"/>
+
+    <ImageButton
+        android:id="@+id/btDeleteNote"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/shape_for_icon_background"
+        android:src="@drawable/trash_can_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="8dp"/>
+
+    <ImageButton
+        android:id="@+id/btSaveNote"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/save_icon"
+        android:background="@drawable/shape_for_icon_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="8dp">
+    </ImageButton>
+
+    <ImageButton
+        android:id="@+id/btBackToNotesList"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/back_icon"
+        android:background="@drawable/shape_for_icon_background"
+        android:layout_margin="8dp"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.ImageButton
 import com.example.note_app_hw.Note_DB.NoteDAO
 import com.example.note_app_hw.Note_DB.NoteEntity
 import com.example.note_app_hw.Note_DB.NotesDB
@@ -15,11 +16,11 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class NoteEditActivity : AppCompatActivity() {
-    private lateinit var btSaveNote: Button
+    private lateinit var btSaveNote: ImageButton
     private lateinit var etNoteName: EditText
     private lateinit var etNoteText: EditText
-    private lateinit var btDeleteNote: Button
-    private lateinit var btBack: Button
+    private lateinit var btDeleteNote: ImageButton
+    private lateinit var btBack: ImageButton
     private lateinit var ctFavorite: CheckBox
     var editMode: Boolean = false // false - Create mode, true - Edit Mode
 

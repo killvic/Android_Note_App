@@ -20,16 +20,16 @@ class RecyclerViewAdapterForFolder(
         val tvNoteText = view.findViewById<TextView>(R.id.tvTextOfNoteFav)
         val tvLastChange = view.findViewById<TextView>(R.id.tvLastChangeFav)
     }
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerViewAdapterForFolder.ViewHolderFav {
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolderFav {
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.recycler_view_row_for_folder, viewGroup, false)
 
-        return RecyclerViewAdapterForFolder.ViewHolderFav(view)
+        return ViewHolderFav(view)
     }
-    override fun onBindViewHolder(viewHolder: RecyclerViewAdapterForFolder.ViewHolderFav, position: Int) {
+    override fun onBindViewHolder(viewHolder: ViewHolderFav, position: Int) {
         viewHolder.tvNoteName.text = notes[position].name
         viewHolder.tvNoteText.text = notes[position].text
-        viewHolder.tvLastChange.text = notes[position].lastChange.toString()
+        viewHolder.tvLastChange.text = notes[position].lastChange
 
         viewHolder.itemView.setOnClickListener {
             onClick?.invoke(notes[position].id)
