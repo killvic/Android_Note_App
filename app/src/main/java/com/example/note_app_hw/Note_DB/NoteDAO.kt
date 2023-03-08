@@ -1,7 +1,5 @@
 package com.example.note_app_hw.Note_DB
-import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.note_app_hw.note_package.NoteClass
 
 @Dao
 interface NoteDAO {

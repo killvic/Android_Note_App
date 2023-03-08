@@ -2,20 +2,13 @@ package com.example.note_app_hw
 
 import android.content.Intent
 import android.os.Bundle
-import android.provider.ContactsContract.CommonDataKinds.Note
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.note_app_hw.Note_DB.NoteDAO
 import com.example.note_app_hw.Note_DB.NoteEntity
 import com.example.note_app_hw.Note_DB.NotesDB
-import com.example.note_app_hw.note_package.NoteClass
+import com.example.note_app_hw.ObjectClasses.NoteClass
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import java.text.SimpleDateFormat
-import java.util.*
 
 // TO-DO
 //

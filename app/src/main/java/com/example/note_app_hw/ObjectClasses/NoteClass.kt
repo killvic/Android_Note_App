@@ -1,9 +1,9 @@
-package com.example.note_app_hw.note_package
+package com.example.note_app_hw.ObjectClasses
 
 data class NoteClass(
     var name: String = "",
     var text: String = "",
-    var lastChange: String = "",
+    var lastChange: Long = 0,
     var id: Int = 0,
     var favorite: Boolean = false
     )

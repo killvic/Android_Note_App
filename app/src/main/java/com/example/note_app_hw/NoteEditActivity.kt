@@ -39,7 +39,7 @@ class NoteEditActivity : AppCompatActivity() {
         editMode = mode(id)
 
         btBack.setOnClickListener{
-            onBackPressed()
+            onBackPressedDispatcher.onBackPressed()
         }
 
         if (editMode) {
@@ -49,17 +49,17 @@ class NoteEditActivity : AppCompatActivity() {
 
             btDeleteNote.setOnClickListener{
                 NotesDB.getDatabase(this).noteDao().deleteById(id)
-                onBackPressed()
+                onBackPressedDispatcher.onBackPressed()
             }
             btSaveNote.setOnClickListener{
                 updateNoteInDatabase(id)
-                onBackPressed()
+                onBackPressedDispatcher.onBackPressed()
             }
         }
         else {
             btSaveNote.setOnClickListener{
                 insertNoteToDatabase()
-                onBackPressed()
+                onBackPressedDispatcher.onBackPressed()
             }
         }
     }
@@ -78,19 +78,12 @@ class NoteEditActivity : AppCompatActivity() {
     // <------------------------------------>
     // Functions for new Note Initialization
 
-    // Converts Long to Time
-    private fun convertLongToTime(time: Long): String {
-        val date = Date(time)
-        val format = SimpleDateFormat("yyyy.MM.dd HH:mm")
-        return format.format(date)
-    }
-
     // Takes information from edit textes and creates a NoteEntity
     private fun createNoteEntity(): NoteEntity {
         return NoteEntity(
-            etNoteName.text.toString(),
-            etNoteText.text.toString(),
-            convertLongToTime(System.currentTimeMillis()),
+            name = etNoteName.text.toString(),
+            text = etNoteText.text.toString(),
+            lastChange = System.currentTimeMillis(),
             favorite = ctFavorite.isChecked
         )
     }
@@ -101,6 +94,7 @@ class NoteEditActivity : AppCompatActivity() {
         noteForEditing.name = etNoteName.text.toString()
         noteForEditing.text = etNoteText.text.toString()
         noteForEditing.favorite = ctFavorite.isChecked
+        noteForEditing.lastChange = System.currentTimeMillis()
         return noteForEditing
     }
 
@@ -120,16 +114,6 @@ class NoteEditActivity : AppCompatActivity() {
     // <----------------------------------->
 
     // Extra function to fill database for testing
-    fun hardcodeFill(){
-        for (i in 1..30) {
-            val note = NoteEntity(
-                name = "Note $i",
-                text = "This is the content of note $i",
-                lastChange = convertLongToTime(System.currentTimeMillis())
-            )
-            NotesDB.getDatabase(this).noteDao().insert(note)
-        }
-    }
 }
 
 

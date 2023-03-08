@@ -4,10 +4,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.note_app_hw.note_package.NoteClass
+import com.example.note_app_hw.ObjectClasses.NoteClass
+import java.text.SimpleDateFormat
+import java.util.*
 
 class RecyclerViewAdapter(
     var notes: List<NoteClass> = listOf(),
@@ -19,7 +20,18 @@ class RecyclerViewAdapter(
         val tvNoteName = view.findViewById<TextView>(R.id.tvNoteNameRow)
         val tvNoteText = view.findViewById<TextView>(R.id.tvNoteTextRow)
         val tvLastChange = view.findViewById<TextView>(R.id.tvLastChangeRow)
-        //val rootLayout: constraing = view.findViewById(R.id.recycler_view_row_root)
+
+        fun bind(view: ViewHolder, note: NoteClass) {
+            view.tvNoteName.text = note.name
+            view.tvNoteText.text = note.text
+            view.tvLastChange.text = convertLongToTime(note.lastChange)
+        }
+
+        fun convertLongToTime(time: Long): String {
+            val date = Date(time)
+            val format = SimpleDateFormat("yyyy.MM.dd HH:mm")
+            return format.format(date)
+        }
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
@@ -30,19 +42,7 @@ class RecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.tvNoteName.text = notes[position].name
-        viewHolder.tvNoteText.text = notes[position].text
-        viewHolder.tvLastChange.text = notes[position].lastChange
-
-
-//        val colorRes = when (position % 6) {
-//            0 -> R.color.color_purple_background
-//            1 -> R.color.color_red_background
-//            2 -> R.color.color_green_background
-//            3 -> R.color.color_yellow_background
-//            4 -> R.color.color_blue_background
-//            else -> R.color.color_dark_blue_background
-//        }
+        viewHolder.bind(viewHolder, notes[position])
 
         viewHolder.itemView.setOnClickListener {
             onClick?.invoke(notes[position].id)
@@ -59,3 +59,4 @@ class RecyclerViewAdapter(
         diffResults.dispatchUpdatesTo(this)
     }
 }
+

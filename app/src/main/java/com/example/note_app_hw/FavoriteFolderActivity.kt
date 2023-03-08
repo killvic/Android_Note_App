@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.note_app_hw.Note_DB.NoteEntity
 import com.example.note_app_hw.Note_DB.NotesDB
-import com.example.note_app_hw.note_package.NoteClass
+import com.example.note_app_hw.ObjectClasses.NoteClass
 
 class FavoriteFolderActivity : AppCompatActivity() {
     private val adapter: RecyclerViewAdapterForFolder = RecyclerViewAdapterForFolder()

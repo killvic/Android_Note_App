@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.note_app_hw.MyDiffUtil
-import com.example.note_app_hw.R
-import com.example.note_app_hw.note_package.NoteClass
+import com.example.note_app_hw.ObjectClasses.NoteClass
+import java.text.SimpleDateFormat
+import java.util.*
 
 class RecyclerViewAdapterForFolder(
     var notes: List<NoteClass> = listOf(),
@@ -29,11 +29,17 @@ class RecyclerViewAdapterForFolder(
     override fun onBindViewHolder(viewHolder: ViewHolderFav, position: Int) {
         viewHolder.tvNoteName.text = notes[position].name
         viewHolder.tvNoteText.text = notes[position].text
-        viewHolder.tvLastChange.text = notes[position].lastChange
+        viewHolder.tvLastChange.text = convertLongToTime(notes[position].lastChange)
 
         viewHolder.itemView.setOnClickListener {
             onClick?.invoke(notes[position].id)
         }
+    }
+
+    fun convertLongToTime(time: Long): String {
+        val date = Date(time)
+        val format = SimpleDateFormat("yyyy.MM.dd HH:mm")
+        return format.format(date)
     }
     fun setData(newNoteList: List<NoteClass>) {
         val diffUtil = MyDiffUtil(notes, newNoteList)
