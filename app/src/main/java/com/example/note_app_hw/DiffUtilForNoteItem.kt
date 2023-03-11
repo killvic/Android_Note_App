@@ -16,11 +16,12 @@ class DiffUtilForNoteItem(
     }
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return when (oldList[oldItemPosition]) {
-            is NoteClass -> ((oldList[oldItemPosition] as NoteClass).id == (newList[newItemPosition] as NoteClass).id)
-            is DateClass -> ((oldList[oldItemPosition] as DateClass).id == (newList[newItemPosition] as DateClass).id)
-            else -> {throw IllegalArgumentException("Invalid item type in diffUtil")}
-        }
+        return oldList[oldItemPosition].id == newList[newItemPosition].id
+//        return when (oldList[oldItemPosition]) {
+//            is NoteClass -> ((oldList[oldItemPosition] as NoteClass).id == (newList[newItemPosition] as NoteClass).id)
+//            is DateClass -> ((oldList[oldItemPosition] as DateClass).id == (newList[newItemPosition] as DateClass).id)
+//            else -> {throw IllegalArgumentException("Invalid item type in diffUtil")}
+//        }
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {

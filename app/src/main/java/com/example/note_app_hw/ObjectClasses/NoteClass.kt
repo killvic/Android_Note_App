@@ -6,7 +6,7 @@ data class NoteClass(
     var name: String = "",
     var text: String = "",
     var lastChange: Long = 0,
-    var id: Int = 0,
+    override var id: Int = 0,
     var favorite: Boolean = false
     ) : NoteListItem
 
