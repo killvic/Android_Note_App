@@ -12,6 +12,9 @@ import com.example.note_app_hw.ObjectClasses.DateClass
 import com.example.note_app_hw.ObjectClasses.NoteClass
 import com.example.note_app_hw.ObjectClasses.NoteListItem
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
 
 // TO-DO
 //
@@ -72,16 +75,40 @@ class MainActivity : AppCompatActivity() {
         }
         var dateList: List<DateClass> = entityList.map { entity ->
             DateClass(
-                date = entity.lastChange,
-                id = entity.id ?: 0
+                date = entity.lastChange
             )
         }
-        var noteAndDateCombinedList: List<NoteListItem> = noteClassList + dateList
-        return noteAndDateCombinedList
+        combineList(noteClassList, dateList)
+        return noteClassList + dateList
     }
+
+
+
+
+
+    fun combineList(noteList: List<NoteClass>, dateList: List<DateClass>) : List<NoteListItem> {
+        val groupedList = noteList.flatMap { note ->
+            val dateNote = dateList.find { it.date == note.lastChange }
+            if (dateNote != null) {
+                listOf(note.copy(lastChange = dateNote.date))
+            } else {
+                listOf(note)
+            }
+        }
+        Log.d("ggg", groupedList.toString())
+        return groupedList
+    }
+
+
+
+
+    fun Long.toLocalDate(): LocalDate {
+        return Instant.ofEpochMilli(this).atZone(ZoneId.systemDefault()).toLocalDate()
+    }
+
     fun addNewNoteScreen() {
         val intent = Intent(this, NoteEditActivity::class.java)
-        startActivity(intent) //
+        startActivity(intent)
     }
 
     fun favoriteFolderScreen() {

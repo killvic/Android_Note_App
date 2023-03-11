@@ -68,8 +68,9 @@ class RecyclerViewAdapterMultipleItems (
                 val item = itemList[position] as NoteClass
                 val itemHolder = holder as ViewHolderForNote
                 itemHolder.bind(item)
+
                 holder.itemView.setOnClickListener {
-                    onClick?.invoke(itemList[position].id)
+                    onClick?.invoke((itemList[position] as NoteClass).id) // ????? может можно по другому
                 }
             }
             DATE_VIEW_TYPE -> {

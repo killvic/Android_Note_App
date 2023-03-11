@@ -102,7 +102,7 @@ class NoteEditActivity : AppCompatActivity() {
     // <------------------------------------>
     // Room Database Functions
 
-    // Calls for CreateNoteEntity() and adds returned entit to database
+    // Calls for CreateNoteEntity() and adds returned entity to database
     private fun insertNoteToDatabase() {
         NotesDB.getDatabase(this).noteDao().insert(createNoteEntity())
     }
@@ -112,8 +112,6 @@ class NoteEditActivity : AppCompatActivity() {
     }
     // Room Database Functions
     // <----------------------------------->
-
-    // Extra function to fill database for testing
 }
 
 
