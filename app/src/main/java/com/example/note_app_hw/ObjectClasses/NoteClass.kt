@@ -1,12 +1,14 @@
 package com.example.note_app_hw.ObjectClasses
 
+import android.provider.ContactsContract.CommonDataKinds.Note
+
 data class NoteClass(
     var name: String = "",
     var text: String = "",
     var lastChange: Long = 0,
     var id: Int = 0,
     var favorite: Boolean = false
-    )
+    ) : NoteListItem
 
 fun areNotesTheSame(oldNoteObject: NoteClass, newNoteObject: NoteClass): Boolean{
     return when {

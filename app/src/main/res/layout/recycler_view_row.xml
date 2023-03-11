@@ -20,6 +20,7 @@
         android:fontFamily="@font/nunito_font"
         android:maxLines="1"
         android:text="Title"
+        android:textSize="24sp"
         android:textColor="#9A9A9A"
         app:layout_constraintEnd_toStartOf="@+id/tvLastChangeRow"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,14 +42,16 @@
         android:id="@+id/tvNoteTextRow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/nunito_font"
         android:layout_margin="8dp"
         android:ellipsize="end"
+        android:fontFamily="@font/nunito_font"
         android:maxLines="3"
-        android:textColor="#9A9A9A"
         android:text="text"
+        android:textColor="#9A9A9A"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvNoteNameRow">
-    </TextView>
+        app:layout_constraintTop_toBottomOf="@+id/tvNoteNameRow"></TextView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

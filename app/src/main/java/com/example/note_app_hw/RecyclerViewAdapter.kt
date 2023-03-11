@@ -48,7 +48,6 @@ class RecyclerViewAdapter(
             onClick?.invoke(notes[position].id)
         }
     }
-
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = notes.size
 

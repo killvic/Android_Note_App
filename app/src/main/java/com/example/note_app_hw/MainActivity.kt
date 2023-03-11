@@ -2,12 +2,15 @@ package com.example.note_app_hw
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.note_app_hw.Note_DB.NoteEntity
 import com.example.note_app_hw.Note_DB.NotesDB
+import com.example.note_app_hw.ObjectClasses.DateClass
 import com.example.note_app_hw.ObjectClasses.NoteClass
+import com.example.note_app_hw.ObjectClasses.NoteListItem
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 // TO-DO
@@ -51,7 +54,9 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() { // database logic
         super.onStart()
         val entityList = NotesDB.getDatabase(this).noteDao().readAllNotes()
+        val dateList = entityList.map{it.lastChange}
         adapter.setData(entityToClassConverter(entityList))
+
     }
 
     // Converts list of NoteEntities to List of NoteClass in order to pass it to RecyclerViewAdapter
@@ -65,6 +70,14 @@ class MainActivity : AppCompatActivity() {
                 favorite = entity.favorite
             )
         }
+        var dateList: List<DateClass> = entityList.map { entity ->
+            DateClass(
+                date = entity.lastChange,
+                id = entity.id ?: 0
+            )
+        }
+        var noteAndDateCombinedList: List<NoteListItem> = noteClassList + dateList
+        Log.d("gg", noteAndDateCombinedList.toString())
         return noteClassList
     }
     fun addNewNoteScreen() {
