@@ -22,7 +22,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 class MainActivity : AppCompatActivity() {
     private lateinit var btAddNote: FloatingActionButton
     private lateinit var btFavoriteFolder: FloatingActionButton
-    private val adapter: RecyclerViewAdapter = RecyclerViewAdapter()
+    private val adapter = RecyclerViewAdapterMultipleItems()
 
     override fun onCreate(savedInstanceState: Bundle?) { // views logic
         super.onCreate(savedInstanceState)
@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Converts list of NoteEntities to List of NoteClass in order to pass it to RecyclerViewAdapter
-    private fun entityToClassConverter(entityList: List<NoteEntity>): List<NoteClass> {
+    private fun entityToClassConverter(entityList: List<NoteEntity>): List<NoteListItem> {
         var noteClassList: List<NoteClass> = entityList.map { entity ->
             NoteClass(
                 id = entity.id ?: 0,
@@ -77,8 +77,7 @@ class MainActivity : AppCompatActivity() {
             )
         }
         var noteAndDateCombinedList: List<NoteListItem> = noteClassList + dateList
-        Log.d("gg", noteAndDateCombinedList.toString())
-        return noteClassList
+        return noteAndDateCombinedList
     }
     fun addNewNoteScreen() {
         val intent = Intent(this, NoteEditActivity::class.java)

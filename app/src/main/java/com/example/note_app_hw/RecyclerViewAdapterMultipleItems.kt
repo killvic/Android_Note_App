@@ -16,7 +16,7 @@ class RecyclerViewAdapterMultipleItems (
     var itemList: List<NoteListItem> = listOf(),
     var onClick: ((Int) -> Unit) ?= null
 ) :
-    RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         const val NOTE_VIEW_TYPE = 1
@@ -28,51 +28,51 @@ class RecyclerViewAdapterMultipleItems (
         val tvNoteText = view.findViewById<TextView>(R.id.tvNoteTextRow)
         val tvLastChange = view.findViewById<TextView>(R.id.tvLastChangeRow)
 
-        fun bind(view: RecyclerViewAdapter.ViewHolder, note: NoteClass) {
-            view.tvNoteName.text = note.name
-            view.tvNoteText.text = note.text
-            view.tvLastChange.text = convertLongToTime(note.lastChange)
+        fun bind(note: NoteClass) {
+            tvNoteName.text = note.name
+            tvNoteText.text = note.text
+            tvLastChange.text = convertLongToTime(note.lastChange)
         }
     }
 
     class ViewHolderForDate(view: View) : RecyclerView.ViewHolder(view) {
         val tvDate = view.findViewById<TextView>(R.id.tvDate)
 
-        fun bind(view: RecyclerView.ViewHolder, date: DateClass) {
-            view.tvDate.text = convertLongToTime(date.date)
+        fun bind(date: DateClass) {
+            tvDate.text = convertLongToTime(date.date)
         }
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): RecyclerViewAdapter.ViewHolder {
-        when (viewType) {
+    ): RecyclerView.ViewHolder {
+        return when (viewType) {
             NOTE_VIEW_TYPE -> {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.recycler_view_row, parent, false)
-                return RecyclerViewAdapter.ViewHolder(view)
+                ViewHolderForNote(view)
             }
             DATE_VIEW_TYPE -> {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.recycler_view_row_for_date, parent, false)
-                return RecyclerViewAdapter.ViewHolder(view)
+                ViewHolderForDate(view)
             }
             else -> throw IllegalArgumentException("Invalid view type")
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerViewAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position)) {
             NOTE_VIEW_TYPE -> {
                 val item = itemList[position] as NoteClass
-                var itemHolder = holder as ViewHolderForNote
-                itemHolder.bind(holder, item)
+                val itemHolder = holder as ViewHolderForNote
+                itemHolder.bind(item)
             }
             DATE_VIEW_TYPE -> {
                 val item = itemList[position] as DateClass
-                var itemHolder = holder as ViewHolderForDate
-                itemHolder.bind(itemHolder, item)
+                val itemHolder = holder as ViewHolderForDate
+                itemHolder.bind(item)
             }
         }
     }
