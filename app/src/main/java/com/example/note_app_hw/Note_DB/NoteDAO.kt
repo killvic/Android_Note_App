@@ -6,6 +6,9 @@ interface NoteDAO {
     @Insert (onConflict = OnConflictStrategy.IGNORE) // .IGNORE is what to do if same id is passed
     fun insert(note: NoteEntity)
 
+    @Insert
+    fun insertAll(notes: List<NoteEntity>)
+
     @Delete()
     fun delete(note: NoteEntity)
 

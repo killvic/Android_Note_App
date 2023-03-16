@@ -39,7 +39,7 @@ class RecyclerViewAdapterMultipleItems (
         val tvDate = view.findViewById<TextView>(R.id.tvDate)
 
         fun bind(date: DateClass) {
-            tvDate.text = convertLongToTime(date.date)
+            tvDate.text = convertLongToDate(date.date)
         }
     }
 
@@ -103,6 +103,12 @@ class RecyclerViewAdapterMultipleItems (
 
 private fun convertLongToTime(time: Long): String {
     val date = Date(time)
-    val format = SimpleDateFormat("yyyy.MM.dd HH:mm")
+    val format = SimpleDateFormat("HH:mm")
+    return format.format(date)
+}
+
+private fun convertLongToDate(time: Long): String {
+    val date = Date(time)
+    val format = SimpleDateFormat("dd.MM yyyy")
     return format.format(date)
 }

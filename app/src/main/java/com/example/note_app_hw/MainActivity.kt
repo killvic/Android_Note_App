@@ -58,9 +58,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() { // database logic
         super.onStart()
+        NotesDB.getDatabase(this).noteDao().insertAll(hardCodeFill())
         val entityList = NotesDB.getDatabase(this).noteDao().readAllNotes()
         val dateList = entityList.map{it.lastChange}
-        adapter.setData(entityToClassConverter(entityList + hardCodeFill()))
+        adapter.setData(entityToClassConverter(entityList))
 
     }
 
@@ -79,7 +80,9 @@ class MainActivity : AppCompatActivity() {
             DateClass(
                 date = truncateTimeFromMillis(entity.lastChange)
             )
-        }.distinctBy { it.date }
+        }
+            .distinctBy { it.date }
+            .sortedByDescending { it.date }
 
         return combineList(noteClassList, dateList)
     }
