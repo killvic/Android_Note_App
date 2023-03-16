@@ -15,6 +15,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
+import java.time.ZoneOffset
+import java.util.concurrent.ThreadLocalRandom
 
 // TO-DO
 //
@@ -58,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
         val entityList = NotesDB.getDatabase(this).noteDao().readAllNotes()
         val dateList = entityList.map{it.lastChange}
-        adapter.setData(entityToClassConverter(entityList))
+        adapter.setData(entityToClassConverter(entityList + hardCodeFill()))
 
     }
 
@@ -75,35 +77,23 @@ class MainActivity : AppCompatActivity() {
         }
         var dateList: List<DateClass> = entityList.map { entity ->
             DateClass(
-                date = entity.lastChange
+                date = truncateTimeFromMillis(entity.lastChange)
             )
-        }
-        combineList(noteClassList, dateList)
-        return noteClassList + dateList
+        }.distinctBy { it.date }
+
+        return combineList(noteClassList, dateList)
     }
-
-
-
-
 
     fun combineList(noteList: List<NoteClass>, dateList: List<DateClass>) : List<NoteListItem> {
-        val groupedList = noteList.flatMap { note ->
-            val dateNote = dateList.find { it.date == note.lastChange }
-            if (dateNote != null) {
-                listOf(note.copy(lastChange = dateNote.date))
-            } else {
-                listOf(note)
+        val combinedList = mutableListOf<NoteListItem>()
+        for (date in dateList) {
+            combinedList.add(date)
+            for (note in noteList) {
+                if (date.date == truncateTimeFromMillis(note.lastChange))
+                    combinedList.add(note)
             }
         }
-        Log.d("ggg", groupedList.toString())
-        return groupedList
-    }
-
-
-
-
-    fun Long.toLocalDate(): LocalDate {
-        return Instant.ofEpochMilli(this).atZone(ZoneId.systemDefault()).toLocalDate()
+        return combinedList
     }
 
     fun addNewNoteScreen() {
@@ -114,5 +104,41 @@ class MainActivity : AppCompatActivity() {
     fun favoriteFolderScreen() {
         val intent = Intent(this, FavoriteFolderActivity::class.java)
         startActivity(intent)
+    }
+
+    fun truncateTimeFromMillis(currentTimeInMillis: Long): Long {
+        // Get the number of milliseconds since midnight (i.e., the time portion)
+        val timeInMillis = currentTimeInMillis % (24 * 60 * 60 * 1000)
+
+        // Subtract the time portion from the current time to get the date
+        val dateInMillis = currentTimeInMillis - timeInMillis
+
+        // Return the date as a Long
+        return dateInMillis
+    }
+
+    // HARDCODE FOR TESTING
+    fun hardCodeFill(): List<NoteEntity>{
+        val noteList = mutableListOf<NoteEntity>()
+
+        // Generate 20 NoteEntity objects with random dates
+        repeat(20) {
+            val name = "Note $it"
+            val text = "This is note $it"
+            val lastChange = generateRandomDate()
+            val favorite = it % 2 == 0
+            val note = NoteEntity(name, text, lastChange, favorite)
+            noteList.add(note)
+        }
+        Log.d("ggg", noteList.toString())
+        return noteList
+    }
+
+    fun generateRandomDate(): Long {
+        val startDate = LocalDate.of(2020, 1, 1)
+        val endDate = LocalDate.of(2023, 3, 16)
+        val startMillis = startDate.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli()
+        val endMillis = endDate.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli()
+        return ThreadLocalRandom.current().nextLong(startMillis, endMillis)
     }
 }
