@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.TextView
 import com.example.note_app_hw.Note_DB.NoteDAO
 import com.example.note_app_hw.Note_DB.NoteEntity
 import com.example.note_app_hw.Note_DB.NotesDB
@@ -16,6 +17,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class NoteEditActivity : AppCompatActivity() {
+    private lateinit var tvLastChanged: TextView
     private lateinit var btSaveNote: ImageButton
     private lateinit var etNoteName: EditText
     private lateinit var etNoteText: EditText
@@ -35,6 +37,7 @@ class NoteEditActivity : AppCompatActivity() {
         btDeleteNote = findViewById(R.id.btDeleteNote)
         btBack = findViewById(R.id.btBackToNotesList)
         ctFavorite = findViewById(R.id.cbFavorite)
+        tvLastChanged = findViewById(R.id.tvLastChanged)
         var id = intent.getIntExtra("id", -1)
         editMode = mode(id)
 
@@ -43,9 +46,11 @@ class NoteEditActivity : AppCompatActivity() {
         }
 
         if (editMode) {
-            etNoteName.setText(NotesDB.getDatabase(this).noteDao().loadSingle(id).name)
-            etNoteText.setText(NotesDB.getDatabase(this).noteDao().loadSingle(id).text)
-            ctFavorite.isChecked = NotesDB.getDatabase(this).noteDao().loadSingle(id).favorite
+            var singleNote = NotesDB.getDatabase(this).noteDao().loadSingle(id)
+            tvLastChanged.text = "last changed: " + convertLongToTime(singleNote.lastChange) + " " + convertLongToDate(singleNote.lastChange)
+            etNoteName.setText(singleNote.name)
+            etNoteText.setText(singleNote.text)
+            ctFavorite.isChecked = singleNote.favorite
 
             btDeleteNote.setOnClickListener{
                 NotesDB.getDatabase(this).noteDao().deleteById(id)
@@ -112,6 +117,18 @@ class NoteEditActivity : AppCompatActivity() {
     }
     // Room Database Functions
     // <----------------------------------->
+
+    private fun convertLongToTime(time: Long): String {
+        val date = Date(time)
+        val format = SimpleDateFormat("HH:mm")
+        return format.format(date)
+    }
+
+    private fun convertLongToDate(time: Long): String {
+        val date = Date(time)
+        val format = SimpleDateFormat("dd.MM")
+        return format.format(date)
+    }
 }
 
 

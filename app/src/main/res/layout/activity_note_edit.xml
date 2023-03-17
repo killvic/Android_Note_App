@@ -7,6 +7,18 @@
     android:background="#252525"
     tools:context=".NoteEditActivity">
 
+    <TextView
+        android:id="@+id/tvLastChanged"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito_font"
+        android:text="last changed: dd.mm. hh.MM"
+        android:textColor="#9A9A9A"
+        app:layout_constraintBottom_toTopOf="@+id/etNoteName"
+        app:layout_constraintEnd_toStartOf="@+id/cbFavorite"
+        app:layout_constraintStart_toEndOf="@+id/btBackToNotesList"
+        app:layout_constraintTop_toTopOf="parent"></TextView>
+
     <EditText
         android:id="@+id/etNoteName"
         android:fontFamily="@font/nunito_font"
