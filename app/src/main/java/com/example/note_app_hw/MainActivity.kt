@@ -16,6 +16,7 @@ import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.ZoneOffset
+import java.util.Date
 import java.util.concurrent.ThreadLocalRandom
 
 // TO-DO
@@ -76,27 +77,19 @@ class MainActivity : AppCompatActivity() {
                 favorite = entity.favorite
             )
         }
-        var dateList: List<DateClass> = entityList.map { entity ->
-            DateClass(
-                date = truncateTimeFromMillis(entity.lastChange)
-            )
-        }
-            .distinctBy { it.date }
-            .sortedByDescending { it.date }
-
-        return combineList(noteClassList, dateList)
+        return groupList(noteClassList)
     }
 
-    fun combineList(noteList: List<NoteClass>, dateList: List<DateClass>) : List<NoteListItem> {
-        val combinedList = mutableListOf<NoteListItem>()
-        for (date in dateList) {
-            combinedList.add(date)
-            for (note in noteList) {
-                if (date.date == truncateTimeFromMillis(note.lastChange))
-                    combinedList.add(note)
+    fun groupList(noteList: List<NoteClass>) : List<NoteListItem> {
+        val groupedList = noteList.groupBy { truncateTimeFromMillis(it.lastChange) }
+        val finalList = mutableListOf<NoteListItem>()
+        groupedList.forEach{ entry ->
+            finalList.add( DateClass(entry.key))
+            entry.value.forEach{
+                finalList.add(it)
             }
         }
-        return combinedList
+        return finalList
     }
 
     fun addNewNoteScreen() {

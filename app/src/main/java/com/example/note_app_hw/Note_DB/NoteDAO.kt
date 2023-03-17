@@ -15,7 +15,7 @@ interface NoteDAO {
     @Update // edit
     fun update(note: NoteEntity)
 
-    @Query("SELECT * FROM notes_table ORDER BY lastChange ASC")
+    @Query("SELECT * FROM notes_table ORDER BY lastChange DESC")
     fun readAllNotes(): List<NoteEntity>
 
     @Query("SELECT * FROM notes_table WHERE id=:id")

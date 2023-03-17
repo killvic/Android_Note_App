@@ -28,10 +28,14 @@ class RecyclerViewAdapterMultipleItems (
         val tvNoteText = view.findViewById<TextView>(R.id.tvNoteTextRow)
         val tvLastChange = view.findViewById<TextView>(R.id.tvLastChangeRow)
 
-        fun bind(note: NoteClass) {
+        fun bind(note: NoteClass, onClick: ((Int) -> Unit)?) {
             tvNoteName.text = note.name
             tvNoteText.text = note.text
             tvLastChange.text = convertLongToTime(note.lastChange)
+
+            itemView.setOnClickListener {
+                onClick?.invoke(note.id)
+            }
         }
     }
 
@@ -67,10 +71,10 @@ class RecyclerViewAdapterMultipleItems (
             NOTE_VIEW_TYPE -> {
                 val item = itemList[position] as NoteClass
                 val itemHolder = holder as ViewHolderForNote
-                itemHolder.bind(item)
+                itemHolder.bind(item, onClick)
 
                 holder.itemView.setOnClickListener {
-                    onClick?.invoke((itemList[position] as NoteClass).id) // ????? может можно по другому
+                    onClick?.invoke(item.id)
                 }
             }
             DATE_VIEW_TYPE -> {
