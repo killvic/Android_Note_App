@@ -1,20 +1,15 @@
 package com.example.note_app_hw
 
-import android.app.Activity
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
-import com.example.note_app_hw.Note_DB.NoteDAO
+import com.example.note_app_hw.Help_Functions.convertLongToDate
+import com.example.note_app_hw.Help_Functions.convertLongToTime
 import com.example.note_app_hw.Note_DB.NoteEntity
 import com.example.note_app_hw.Note_DB.NotesDB
-import java.text.SimpleDateFormat
-import java.util.*
 
 class NoteEditActivity : AppCompatActivity() {
     private lateinit var tvLastChanged: TextView
@@ -50,7 +45,7 @@ class NoteEditActivity : AppCompatActivity() {
             tvLastChanged.text = "last changed: " + convertLongToTime(singleNote.lastChange) + " " + convertLongToDate(singleNote.lastChange)
             etNoteName.setText(singleNote.name)
             etNoteText.setText(singleNote.text)
-            ctFavorite.isChecked = singleNote.favorite
+            // ctFavorite.isChecked = singleNote.favorite
 
             btDeleteNote.setOnClickListener{
                 NotesDB.getDatabase(this).noteDao().deleteById(id)
@@ -89,7 +84,7 @@ class NoteEditActivity : AppCompatActivity() {
             name = etNoteName.text.toString(),
             text = etNoteText.text.toString(),
             lastChange = System.currentTimeMillis(),
-            favorite = ctFavorite.isChecked
+            //favorite = ctFavorite.isChecked
         )
     }
 
@@ -98,7 +93,7 @@ class NoteEditActivity : AppCompatActivity() {
         var noteForEditing = NotesDB.getDatabase(this).noteDao().loadSingle(id)
         noteForEditing.name = etNoteName.text.toString()
         noteForEditing.text = etNoteText.text.toString()
-        noteForEditing.favorite = ctFavorite.isChecked
+        //noteForEditing.favorite = ctFavorite.isChecked
         noteForEditing.lastChange = System.currentTimeMillis()
         return noteForEditing
     }
@@ -117,18 +112,6 @@ class NoteEditActivity : AppCompatActivity() {
     }
     // Room Database Functions
     // <----------------------------------->
-
-    private fun convertLongToTime(time: Long): String {
-        val date = Date(time)
-        val format = SimpleDateFormat("HH:mm")
-        return format.format(date)
-    }
-
-    private fun convertLongToDate(time: Long): String {
-        val date = Date(time)
-        val format = SimpleDateFormat("dd.MM")
-        return format.format(date)
-    }
 }
 
 

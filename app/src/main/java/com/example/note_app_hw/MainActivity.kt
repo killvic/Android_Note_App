@@ -8,23 +8,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.note_app_hw.Note_DB.NoteEntity
 import com.example.note_app_hw.Note_DB.NotesDB
-import com.example.note_app_hw.ObjectClasses.DateClass
-import com.example.note_app_hw.ObjectClasses.NoteClass
-import com.example.note_app_hw.ObjectClasses.NoteListItem
+import com.example.note_app_hw.Data_Classes.DateClass
+import com.example.note_app_hw.Data_Classes.NoteClass
+import com.example.note_app_hw.Data_Classes.NoteListItem
+import com.example.note_app_hw.Help_Functions.hardCodeFill
+import com.example.note_app_hw.Help_Functions.truncateTimeFromMillis
+import com.example.note_app_hw.Recycler_View_Classes.RecyclerViewAdapterMultipleItems
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import java.time.Instant
 import java.time.LocalDate
-import java.time.ZoneId
 import java.time.ZoneOffset
-import java.util.Date
 import java.util.concurrent.ThreadLocalRandom
-
-// TO-DO
-//
 
 // EXTRA FEATURES:
 // - Every new note will have different background color
-// - Add feature, that will allow user to download pictures to notes
 class MainActivity : AppCompatActivity() {
     private lateinit var btAddNote: FloatingActionButton
     private lateinit var btFavoriteFolder: FloatingActionButton
@@ -50,18 +46,12 @@ class MainActivity : AppCompatActivity() {
         btAddNote.setOnClickListener {
             addNewNoteScreen()
         }
-
-        btFavoriteFolder = findViewById(R.id.favFavoriteFolder)
-        btFavoriteFolder.setOnClickListener{
-            favoriteFolderScreen()
-        }
     }
 
     override fun onStart() { // database logic
         super.onStart()
         NotesDB.getDatabase(this).noteDao().insertAll(hardCodeFill())
         val entityList = NotesDB.getDatabase(this).noteDao().readAllNotes()
-        val dateList = entityList.map{it.lastChange}
         adapter.setData(entityToClassConverter(entityList))
 
     }
@@ -73,8 +63,7 @@ class MainActivity : AppCompatActivity() {
                 id = entity.id ?: 0,
                 lastChange = entity.lastChange,
                 name = entity.name,
-                text = entity.text,
-                favorite = entity.favorite
+                text = entity.text
             )
         }
         return groupList(noteClassList)
@@ -95,46 +84,5 @@ class MainActivity : AppCompatActivity() {
     fun addNewNoteScreen() {
         val intent = Intent(this, NoteEditActivity::class.java)
         startActivity(intent)
-    }
-
-    fun favoriteFolderScreen() {
-        val intent = Intent(this, FavoriteFolderActivity::class.java)
-        startActivity(intent)
-    }
-
-    fun truncateTimeFromMillis(currentTimeInMillis: Long): Long {
-        // Get the number of milliseconds since midnight (i.e., the time portion)
-        val timeInMillis = currentTimeInMillis % (24 * 60 * 60 * 1000)
-
-        // Subtract the time portion from the current time to get the date
-        val dateInMillis = currentTimeInMillis - timeInMillis
-
-        // Return the date as a Long
-        return dateInMillis
-    }
-
-    // HARDCODE FOR TESTING
-    fun hardCodeFill(): List<NoteEntity>{
-        val noteList = mutableListOf<NoteEntity>()
-
-        // Generate 20 NoteEntity objects with random dates
-        repeat(20) {
-            val name = "Note $it"
-            val text = "This is note $it"
-            val lastChange = generateRandomDate()
-            val favorite = it % 2 == 0
-            val note = NoteEntity(name, text, lastChange, favorite)
-            noteList.add(note)
-        }
-        Log.d("ggg", noteList.toString())
-        return noteList
-    }
-
-    fun generateRandomDate(): Long {
-        val startDate = LocalDate.of(2020, 1, 1)
-        val endDate = LocalDate.of(2023, 3, 16)
-        val startMillis = startDate.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli()
-        val endMillis = endDate.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli()
-        return ThreadLocalRandom.current().nextLong(startMillis, endMillis)
     }
 }

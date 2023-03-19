@@ -1,4 +1,4 @@
-package com.example.note_app_hw
+package com.example.note_app_hw.Recycler_View_Classes
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,11 +6,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.note_app_hw.ObjectClasses.DateClass
-import com.example.note_app_hw.ObjectClasses.NoteClass
-import com.example.note_app_hw.ObjectClasses.NoteListItem
-import java.text.SimpleDateFormat
-import java.util.*
+import com.example.note_app_hw.Data_Classes.DateClass
+import com.example.note_app_hw.Data_Classes.NoteClass
+import com.example.note_app_hw.Data_Classes.NoteListItem
+import com.example.note_app_hw.Help_Functions.convertLongToDate
+import com.example.note_app_hw.Help_Functions.convertLongToTime
+import com.example.note_app_hw.Help_Functions.convertLongToYear
+import com.example.note_app_hw.R
 
 class RecyclerViewAdapterMultipleItems (
     var itemList: List<NoteListItem> = listOf(),
@@ -43,7 +45,7 @@ class RecyclerViewAdapterMultipleItems (
         val tvDate = view.findViewById<TextView>(R.id.tvDate)
 
         fun bind(date: DateClass) {
-            tvDate.text = convertLongToDate(date.date)
+            tvDate.text = convertLongToDate(date.date) + " " + convertLongToYear(date.date)
         }
     }
 
@@ -101,18 +103,4 @@ class RecyclerViewAdapterMultipleItems (
     }
 
     override fun getItemCount() = itemList.size
-}
-
-// HELP FUNCTIONS
-
-private fun convertLongToTime(time: Long): String {
-    val date = Date(time)
-    val format = SimpleDateFormat("HH:mm")
-    return format.format(date)
-}
-
-private fun convertLongToDate(time: Long): String {
-    val date = Date(time)
-    val format = SimpleDateFormat("dd.MM yyyy")
-    return format.format(date)
 }

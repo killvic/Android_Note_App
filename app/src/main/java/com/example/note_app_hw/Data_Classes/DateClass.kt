@@ -1,4 +1,4 @@
-package com.example.note_app_hw.ObjectClasses
+package com.example.note_app_hw.Data_Classes
 
 data class DateClass(
     var date: Long = 0,

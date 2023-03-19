@@ -1,7 +1,7 @@
-package com.example.note_app_hw
+package com.example.note_app_hw.Recycler_View_Classes
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.note_app_hw.ObjectClasses.*
+import com.example.note_app_hw.Data_Classes.*
 
 class DiffUtilForNoteItem(
     private val oldList: List<NoteListItem>,
