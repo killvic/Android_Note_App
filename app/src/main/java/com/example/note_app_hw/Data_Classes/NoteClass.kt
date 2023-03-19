@@ -5,6 +5,7 @@ data class NoteClass(
     var text: String = "",
     var lastChange: Long = 0,
     var id: Int = 0,
+    var isFavorite: Boolean = false,
     ) : NoteListItem
 
 fun areNotesTheSame(oldNoteObject: NoteClass, newNoteObject: NoteClass): Boolean{
@@ -13,6 +14,7 @@ fun areNotesTheSame(oldNoteObject: NoteClass, newNoteObject: NoteClass): Boolean
         oldNoteObject.name != newNoteObject.name -> { false }
         oldNoteObject.text != newNoteObject.text -> { false }
         oldNoteObject.lastChange != newNoteObject.lastChange -> { false }
+        oldNoteObject.isFavorite != newNoteObject.isFavorite -> { false }
     else -> true
     }
 }

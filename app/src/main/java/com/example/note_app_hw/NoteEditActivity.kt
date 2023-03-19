@@ -45,7 +45,7 @@ class NoteEditActivity : AppCompatActivity() {
             tvLastChanged.text = "last changed: " + convertLongToTime(singleNote.lastChange) + " " + convertLongToDate(singleNote.lastChange)
             etNoteName.setText(singleNote.name)
             etNoteText.setText(singleNote.text)
-            // ctFavorite.isChecked = singleNote.favorite
+            ctFavorite.isChecked = singleNote.isFavorite
 
             btDeleteNote.setOnClickListener{
                 NotesDB.getDatabase(this).noteDao().deleteById(id)
@@ -84,7 +84,7 @@ class NoteEditActivity : AppCompatActivity() {
             name = etNoteName.text.toString(),
             text = etNoteText.text.toString(),
             lastChange = System.currentTimeMillis(),
-            //favorite = ctFavorite.isChecked
+            isFavorite = ctFavorite.isChecked
         )
     }
 
@@ -93,7 +93,7 @@ class NoteEditActivity : AppCompatActivity() {
         var noteForEditing = NotesDB.getDatabase(this).noteDao().loadSingle(id)
         noteForEditing.name = etNoteName.text.toString()
         noteForEditing.text = etNoteText.text.toString()
-        //noteForEditing.favorite = ctFavorite.isChecked
+        noteForEditing.isFavorite = ctFavorite.isChecked
         noteForEditing.lastChange = System.currentTimeMillis()
         return noteForEditing
     }

@@ -4,10 +4,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(
     entities = [NoteEntity::class],
-    version = 1 // изменить чтобы создать новую базу
+    version = 2
+    // 1 to 2 changes: Added isFavorite parameter for notes
     //exportSchema = false
 )
 abstract class NotesDB : RoomDatabase() {
@@ -34,12 +37,18 @@ abstract class NotesDB : RoomDatabase() {
                 NotesDB::class.java,
                 "notes_db"
             )
+                .addMigrations(MIGRATION_1_2)
                 // позволяет выполнять запросы к БД в главном потоке
                 .allowMainThreadQueries()
                 // удаляет текушую базу если её схема не совпадает с новой схемой
                 // после изменения какого-нибудь Entity, либо после создания нового Entity
-                .fallbackToDestructiveMigration()
+                //.fallbackToDestructiveMigration()
                 .build()
+        }
+        private val MIGRATION_1_2 = object : Migration(1, 2) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE notes_table ADD COLUMN isFavorite INTEGER NOT NULL DEFAULT 0")
+            }
         }
     }
 }

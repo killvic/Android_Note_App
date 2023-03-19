@@ -8,5 +8,6 @@ data class NoteEntity(
     var name: String = "",
     var text: String = "",
     var lastChange: Long = 0,
+    var isFavorite: Boolean = false,
     @PrimaryKey(autoGenerate = true) val id: Int? = null
 )

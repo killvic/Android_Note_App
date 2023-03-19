@@ -23,7 +23,7 @@ import java.util.concurrent.ThreadLocalRandom
 // - Every new note will have different background color
 class MainActivity : AppCompatActivity() {
     private lateinit var btAddNote: FloatingActionButton
-    private lateinit var btFavoriteFolder: FloatingActionButton
+    // private lateinit var btFavoriteFolder: FloatingActionButton
     private val adapter = RecyclerViewAdapterMultipleItems()
 
     override fun onCreate(savedInstanceState: Bundle?) { // views logic
@@ -63,7 +63,8 @@ class MainActivity : AppCompatActivity() {
                 id = entity.id ?: 0,
                 lastChange = entity.lastChange,
                 name = entity.name,
-                text = entity.text
+                text = entity.text,
+                isFavorite = entity.isFavorite
             )
         }
         return groupList(noteClassList)
