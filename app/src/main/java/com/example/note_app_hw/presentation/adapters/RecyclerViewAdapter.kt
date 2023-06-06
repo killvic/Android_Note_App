@@ -1,4 +1,4 @@
-package com.example.note_app_hw
+package com.example.note_app_hw.presentation.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,7 +6,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.note_app_hw.ObjectClasses.NoteClass
+import com.example.note_app_hw.domain.models.NoteClass
+import com.example.note_app_hw.presentation.diffutil.DiffUtilForNotes
+import com.example.note_app_hw.R
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -53,7 +55,7 @@ class RecyclerViewAdapter(
     override fun getItemCount() = notes.size
 
     fun setData(newNoteList: List<NoteClass>) {
-        val diffUtil = MyDiffUtil(notes, newNoteList)
+        val diffUtil = DiffUtilForNotes(notes, newNoteList)
         val diffResults = DiffUtil.calculateDiff(diffUtil)
         notes = newNoteList
         diffResults.dispatchUpdatesTo(this)

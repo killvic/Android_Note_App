@@ -10,7 +10,7 @@
     android:maxHeight="104dp"
     android:layout_margin="4dp"
     android:background="@drawable/shape_for_icon_background"
-    tools:context=".MainActivity">
+    tools:context=".presentation.activities.MainActivity">
 
     <TextView
         android:id="@+id/tvNoteNameRow"

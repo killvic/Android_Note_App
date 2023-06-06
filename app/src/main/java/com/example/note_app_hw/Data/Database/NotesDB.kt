@@ -1,4 +1,4 @@
-package com.example.note_app_hw.Note_DB
+package com.example.note_app_hw.Data.Database
 
 import android.content.Context
 import androidx.room.Database
@@ -19,7 +19,7 @@ abstract class NotesDB : RoomDatabase() {
         @Volatile
         private var instance: NotesDB? = null
 
-        fun getDatabase(context: Context): NotesDB{
+        fun getDatabase(context: Context): NotesDB {
             if(instance == null){
                 synchronized(this){
                     instance = buildDatabase(context)

@@ -8,7 +8,7 @@
     android:maxHeight="164dp"
     android:layout_margin="4dp"
     android:background="@drawable/shape_for_icon_background"
-    tools:context=".FavoriteFolderActivity">
+    tools:context=".presentation.activities.FavoriteFolderActivity">
 
     <TextView
         android:id="@+id/tvNameOfNoteFav"

@@ -1,13 +1,15 @@
-package com.example.note_app_hw
+package com.example.note_app_hw.presentation.activities
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.note_app_hw.Note_DB.NoteEntity
-import com.example.note_app_hw.Note_DB.NotesDB
-import com.example.note_app_hw.ObjectClasses.NoteClass
+import com.example.note_app_hw.Data.Database.NoteEntity
+import com.example.note_app_hw.Data.Database.NotesDB
+import com.example.note_app_hw.domain.models.NoteClass
+import com.example.note_app_hw.R
+import com.example.note_app_hw.presentation.adapters.RecyclerViewAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 // TO-DO

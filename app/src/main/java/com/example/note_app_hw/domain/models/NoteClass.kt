@@ -1,4 +1,4 @@
-package com.example.note_app_hw.ObjectClasses
+package com.example.note_app_hw.domain.models
 
 data class NoteClass(
     var name: String = "",

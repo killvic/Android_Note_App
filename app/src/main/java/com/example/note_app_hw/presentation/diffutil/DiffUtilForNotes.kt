@@ -1,10 +1,10 @@
-package com.example.note_app_hw
+package com.example.note_app_hw.presentation.diffutil
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.note_app_hw.ObjectClasses.NoteClass
-import com.example.note_app_hw.ObjectClasses.areNotesTheSame
+import com.example.note_app_hw.domain.models.NoteClass
+import com.example.note_app_hw.domain.models.areNotesTheSame
 
-class MyDiffUtil(
+class DiffUtilForNotes(
     private val oldList: List<NoteClass>,
     private val newList: List<NoteClass>
 ): DiffUtil.Callback() {

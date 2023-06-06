@@ -1,19 +1,13 @@
-package com.example.note_app_hw
+package com.example.note_app_hw.presentation.activities
 
-import android.app.Activity
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageButton
-import com.example.note_app_hw.Note_DB.NoteDAO
-import com.example.note_app_hw.Note_DB.NoteEntity
-import com.example.note_app_hw.Note_DB.NotesDB
-import java.text.SimpleDateFormat
-import java.util.*
+import com.example.note_app_hw.Data.Database.NoteEntity
+import com.example.note_app_hw.Data.Database.NotesDB
+import com.example.note_app_hw.R
 
 class NoteEditActivity : AppCompatActivity() {
     private lateinit var btSaveNote: ImageButton
